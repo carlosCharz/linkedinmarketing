@@ -2,9 +2,11 @@ package com.wedevol.linkedinmarketing.core.service.impl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +23,7 @@ import com.wedevol.linkedinmarketing.core.entity.Person;
 import com.wedevol.linkedinmarketing.core.service.DataProcessorService;
 
 /**
- * Service that manages the logic
+ * Service that manages the business logic
  *
  * @author charz
  */
@@ -52,14 +54,26 @@ public class DataProcessorServiceImpl implements DataProcessorService {
     // process
     logger.info("Processing data ...");
     List<Person> targetPeople = processData(people);
-    logger.info("Target People: {}", people.size());
+    logger.info("Target People: {}", targetPeople.size());
 
     // print
     printData(targetPeople);
 
     // build output
     logger.info("Building output file ...");
+    createOutputFile(targetPeople);
+  }
 
+  private void createOutputFile(List<Person> targetPeople) {
+    FileWriter fileWriter;
+    try {
+      fileWriter = new FileWriter("people.out");
+      PrintWriter printWriter = new PrintWriter(fileWriter);
+      targetPeople.stream().forEach(p -> printWriter.println(p.getId()));
+      printWriter.close();
+    } catch (IOException e) {
+      logger.error("Error writing the output file. {}", e);
+    }
   }
 
   private void printData(List<Person> people) {
@@ -89,10 +103,10 @@ public class DataProcessorServiceImpl implements DataProcessorService {
       int p2ConnQty = p2.getConnectionsQty();
       // apply a z-score standardization with weights
       // NOTE assuming average recommendations = 5 with deviation = 2
-      // NOTE assuming average connections = 500 with deviation = 50 
+      // NOTE assuming average connections = 400 with deviation = 50 
       // z = (x – μ) / σ
-      int p1Score = ((p1RecoQty - 5) / 2 * 7 + (p1ConnQty - 500)/ 50 * 3) / 10;
-      int p2Score = ((p2RecoQty - 5) / 2 * 7 + (p2ConnQty - 500)/ 50 * 3) / 10;
+      int p1Score = ((p1RecoQty - 5) / 2 * 7 + (p1ConnQty - 300)/ 50 * 3) / 10;
+      int p2Score = ((p2RecoQty - 5) / 2 * 7 + (p2ConnQty - 300)/ 50 * 3) / 10;
       return p2Score - p1Score;
     };
   }

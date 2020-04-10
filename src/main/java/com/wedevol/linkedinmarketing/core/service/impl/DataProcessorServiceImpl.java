@@ -82,7 +82,6 @@ public class DataProcessorServiceImpl implements DataProcessorService {
   
   private List<Person> processData(List<Person> people) {
     // order data based on a criteria
-    // NOTE I give more weight to people that have more recommendations (60%) than connections (40%)
     people.sort(peopleWeightedSortComparator());
     // limit output to N first elements
     if (people.size() >= appSetting.getOutputQty()) {
@@ -95,6 +94,7 @@ public class DataProcessorServiceImpl implements DataProcessorService {
   }
 
   private Comparator<Person> peopleWeightedSortComparator() {
+    // NOTE I give more weight to people that have more recommendations (70%) than connections (30%)
     return (p1, p2) -> {
       // TODO weights and averages can be parameterized
       int p1RecoQty = p1.getRecommendationsQty();
@@ -105,9 +105,9 @@ public class DataProcessorServiceImpl implements DataProcessorService {
       // NOTE assuming average recommendations = 5 with deviation = 2
       // NOTE assuming average connections = 400 with deviation = 50 
       // z = (x – μ) / σ
-      int p1Score = ((p1RecoQty - 5) / 2 * 7 + (p1ConnQty - 300)/ 50 * 3) / 10;
-      int p2Score = ((p2RecoQty - 5) / 2 * 7 + (p2ConnQty - 300)/ 50 * 3) / 10;
-      return p2Score - p1Score;
+      double p1Score = ((p1RecoQty - 5) / 2.0 * 7.0 + (p1ConnQty - 300)/ 50.0 * 3.0) / 10.0;
+      double p2Score = ((p2RecoQty - 5) / 2.0 * 7.0 + (p2ConnQty - 300)/ 50.0 * 3.0) / 10.0;
+      return Double.compare(p2Score, p1Score);
     };
   }
 

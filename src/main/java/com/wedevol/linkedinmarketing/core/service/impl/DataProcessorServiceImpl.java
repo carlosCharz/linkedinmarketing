@@ -65,10 +65,7 @@ public class DataProcessorServiceImpl implements DataProcessorService {
   }
 
   private void createOutputFile(List<Person> targetPeople) {
-    FileWriter fileWriter;
-    try {
-      fileWriter = new FileWriter("people.out");
-      PrintWriter printWriter = new PrintWriter(fileWriter);
+    try (PrintWriter printWriter = new PrintWriter(new FileWriter("people.out"));) {
       targetPeople.stream().forEach(p -> printWriter.println(p.getId()));
       printWriter.close();
     } catch (IOException e) {

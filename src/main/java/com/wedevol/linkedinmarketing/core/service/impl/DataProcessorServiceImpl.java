@@ -76,7 +76,7 @@ public class DataProcessorServiceImpl implements DataProcessorService {
   private void printData(List<Person> people) {
     people.stream().forEach(p -> logger.info(p.toString()));
   }
-  
+
   private List<Person> processData(List<Person> people) {
     // order data based on a criteria
     people.sort(peopleWeightedSortComparator());
@@ -100,10 +100,10 @@ public class DataProcessorServiceImpl implements DataProcessorService {
       int p2ConnQty = p2.getConnectionsQty();
       // apply a z-score standardization with weights
       // NOTE assuming average recommendations = 5 with deviation = 2
-      // NOTE assuming average connections = 400 with deviation = 50 
+      // NOTE assuming average connections = 400 with deviation = 50
       // z = (x – μ) / σ
-      double p1Score = ((p1RecoQty - 5) / 2.0 * 7.0 + (p1ConnQty - 300)/ 50.0 * 3.0) / 10.0;
-      double p2Score = ((p2RecoQty - 5) / 2.0 * 7.0 + (p2ConnQty - 300)/ 50.0 * 3.0) / 10.0;
+      double p1Score = ((p1RecoQty - 5) / 2.0 * 7.0 + (p1ConnQty - 300) / 50.0 * 3.0) / 10.0;
+      double p2Score = ((p2RecoQty - 5) / 2.0 * 7.0 + (p2ConnQty - 300) / 50.0 * 3.0) / 10.0;
       return Double.compare(p2Score, p1Score);
     };
   }
@@ -161,7 +161,7 @@ public class DataProcessorServiceImpl implements DataProcessorService {
             if (lineParts.length > 7) {
               connectionsQty = lineParts[7].trim().isEmpty() ? 0 : Integer.parseInt(lineParts[7]);
             }
-            
+
             Person person =
                 new Person(id, name, lastName, currentRole, country, industry, recommendationsQty, connectionsQty);
             people.add(person);

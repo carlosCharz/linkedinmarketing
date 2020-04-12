@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * App settings loaded from a property file
- * 
+ *
  * @author charz
  */
 

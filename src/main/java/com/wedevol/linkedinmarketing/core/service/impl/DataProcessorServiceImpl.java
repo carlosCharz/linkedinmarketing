@@ -109,10 +109,10 @@ public class DataProcessorServiceImpl implements DataProcessorService {
   }
 
   private List<Person> readPeopleFromInputFile() {
-    List<Person> people = new ArrayList<Person>();
+    List<Person> people = new ArrayList<>();
     try {
       // TODO file name and file path can be parameterized
-      Resource resource = (Resource) new ClassPathResource("people.in");
+      Resource resource = new ClassPathResource("people.in");
       InputStream inputStream = getInputStream(resource);
       try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream, CHARSET_UTF8))) {
         String line;

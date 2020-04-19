@@ -31,7 +31,7 @@ import com.wedevol.linkedinmarketing.core.service.DataProcessorService;
 @Service
 public class DataProcessorServiceImpl implements DataProcessorService {
 
-  protected static final Logger logger = LoggerFactory.getLogger(DataProcessorServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(DataProcessorServiceImpl.class);
   private static final String CHARSET_UTF8 = "UTF8";
   private static final String LINE_SEPARATOR = "\\|";
 

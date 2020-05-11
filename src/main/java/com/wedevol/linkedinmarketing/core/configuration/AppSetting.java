@@ -16,25 +16,25 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 public class AppSetting {
 
-  private static final Logger logger = LoggerFactory.getLogger(AppSetting.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppSetting.class);
 
-  private Integer outputQty;
+    private Integer outputQty;
 
-  public AppSetting() {
-    logger.info("Loading app properties");
-  }
+    public AppSetting() {
+        logger.info("Loading app properties");
+    }
 
-  @PostConstruct
-  public void postConstruct() {
-    logger.info("App properties -> outputQty: {}", outputQty);
-  }
+    @PostConstruct
+    public void postConstruct() {
+        logger.info("App properties -> outputQty: {}", outputQty);
+    }
 
-  public Integer getOutputQty() {
-    return outputQty;
-  }
+    public Integer getOutputQty() {
+        return outputQty;
+    }
 
-  public void setOutputQty(Integer outputQty) {
-    this.outputQty = outputQty;
-  }
+    public void setOutputQty(Integer outputQty) {
+        this.outputQty = outputQty;
+    }
 
 }

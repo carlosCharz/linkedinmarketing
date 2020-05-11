@@ -8,6 +8,6 @@ package com.wedevol.linkedinmarketing.core.service;
 
 public interface DataProcessorService {
 
-  void executeMarketingAnalysis();
+    void executeMarketingAnalysis();
 
 }

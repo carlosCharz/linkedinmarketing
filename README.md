@@ -6,7 +6,7 @@ This is a Spring Boot project to get the top N users to send a mail to for a Lin
 ## Technologies
 - SpringBoot
 - Java 8
-- JUnit
+- JUnit 5
 
 
 ## To compile project (locate in the pom's directory)

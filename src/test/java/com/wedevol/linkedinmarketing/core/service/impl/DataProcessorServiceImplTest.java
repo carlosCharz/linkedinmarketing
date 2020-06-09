@@ -12,7 +12,7 @@ public class DataProcessorServiceImplTest {
     public void lineArraySplitNotEmptyTest() {
         String line = "4567|arturo|perez|teleport engineering manager|Germany|Telecommunications|3|176";
         String[] lineParts = line.split("\\|");
-        Assert.notEmpty(lineParts, "The array is empty");
+        Assert.notEmpty(lineParts, "The array should not be empty");
     }
 
     @Test

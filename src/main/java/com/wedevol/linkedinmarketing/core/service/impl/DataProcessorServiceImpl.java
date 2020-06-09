@@ -31,7 +31,7 @@ import com.wedevol.linkedinmarketing.core.service.DataProcessorService;
 @Service
 public class DataProcessorServiceImpl implements DataProcessorService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DataProcessorServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataProcessorServiceImpl.class);
     private static final String CHARSET_UTF8 = "UTF8";
     private static final String LINE_SEPARATOR = "\\|";
 
@@ -40,27 +40,27 @@ public class DataProcessorServiceImpl implements DataProcessorService {
 
     @PostConstruct
     public void postConstruct() throws IOException {
-        logger.info("Starting process ...");
+        LOG.info("Starting process ...");
         executeMarketingAnalysis();
     }
 
     @Override
     public void executeMarketingAnalysis() {
         // read input
-        logger.info("Reading input file ...");
+        LOG.info("Reading input file ...");
         List<Person> people = readPeopleFromInputFile();
-        logger.info("People: {}", people.size());
+        LOG.info("People: {}", people.size());
 
         // process
-        logger.info("Processing data ...");
+        LOG.info("Processing data ...");
         List<Person> targetPeople = processData(people);
-        logger.info("Target People: {}", targetPeople.size());
+        LOG.info("Target People: {}", targetPeople.size());
 
         // print
         printData(targetPeople);
 
         // build output
-        logger.info("Building output file ...");
+        LOG.info("Building output file ...");
         createOutputFile(targetPeople);
     }
 
@@ -69,12 +69,12 @@ public class DataProcessorServiceImpl implements DataProcessorService {
             targetPeople.stream().forEach(p -> printWriter.println(p.getId()));
             printWriter.close();
         } catch (IOException e) {
-            logger.error("Error writing the output file. {}", e);
+            LOG.error("Error writing the output file. {}", e);
         }
     }
 
     private void printData(List<Person> people) {
-        people.stream().forEach(p -> logger.info(p.toString()));
+        people.stream().forEach(p -> LOG.info(p.toString()));
     }
 
     private List<Person> processData(List<Person> people) {
@@ -85,7 +85,7 @@ public class DataProcessorServiceImpl implements DataProcessorService {
             List<Person> peopleSubset = people.stream().limit(appSetting.getOutputQty()).collect(Collectors.toList());
             return peopleSubset;
         } else {
-            logger.info("People qty is smaller than output qty");
+            LOG.info("People qty is smaller than output qty");
             return people;
         }
     }
@@ -166,14 +166,14 @@ public class DataProcessorServiceImpl implements DataProcessorService {
                                 recommendationsQty, connectionsQty);
                         people.add(person);
                     } else {
-                        logger.info("Empty line ...");
+                        LOG.info("Empty line ...");
                     }
                 }
             } catch (FileNotFoundException e) {
-                logger.error("Error reading the input file. {}", e);
+                LOG.error("Error reading the input file. {}", e);
             }
         } catch (Exception e) {
-            logger.error("Error opening the input file. {}", e);
+            LOG.error("Error opening the input file. {}", e);
         }
         return people;
     }
